@@ -5,19 +5,35 @@ import static org.junit.jupiter.api.Assertions.*;
 class BonusServiceTest {
 
     @Test
-    void shouldCalculateNoRegisteredAndOverLimit() {
+    void shouldCalculateRegisteredAndUnderLimit() {
+        BonusService service = new BonusService();
+
+        // подготавливаем данные:
+        long amount = 1000_60;
+        boolean registered = true;
+        long expected = 30;
+
+        // вызываем целевой метод:
+        long actual = service.calculate(amount, registered);
+
+        // производим проверку (сравниваем ожидаемый и фактический):
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldCalculateRegisteredAndOverLimit() {
         BonusService service = new BonusService();
 
         // подготавливаем данные:
         long amount = 1000_000_60;
-        boolean registered = false;
+        boolean registered = true;
         long expected = 500;
 
         // вызываем целевой метод:
         long actual = service.calculate(amount, registered);
 
         // производим проверку (сравниваем ожидаемый и фактический):
-        assertEquals(expected , actual);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -33,6 +49,22 @@ class BonusServiceTest {
         long actual = service.calculate(amount, registered);
 
         // производим проверку (сравниваем ожидаемый и фактический):
-        assertEquals(expected , actual);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldCalculateNoRegisteredAndOverLimit() {
+        BonusService service = new BonusService();
+
+        // подготавливаем данные:
+        long amount = 1000_000_60;
+        boolean registered = false;
+        long expected = 500;
+
+        // вызываем целевой метод:
+        long actual = service.calculate(amount, registered);
+
+        // производим проверку (сравниваем ожидаемый и фактический):
+        assertEquals(expected, actual);
     }
 }
